@@ -34,8 +34,8 @@ class SongManager(models.Manager):
 
 class Song(models.Model):
     name = models.CharField(max_length=25)
-    document = models.FileField(
-        upload_to='documents/')
+    document = models.FileField(null=True, blank=True,
+                                upload_to='documents/')
     objects = SongManager()
 
 
