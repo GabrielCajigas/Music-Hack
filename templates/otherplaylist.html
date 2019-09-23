@@ -1,0 +1,83 @@
+{% extends "login.html" %}
+{% load static %}
+{% block extrahead %}
+<title>Playlist</title>
+<link rel="stylesheet" href="{% static 'css/otherplaylistcss.css' %}">
+{% endblock %}
+</head>
+{% block content %}
+
+<body>
+    <div class="float-right " style="margin-right:1%;"><a href="/home">Home</a> | <a href="/logoff">Bye</a>
+    </div>
+    <div class="jumbotron  backgroundcolor">
+        <div class="container text-center">
+            <h1 class="display-1">{{thisplaylist.name|title}}</h1>
+        </div>
+    </div>
+    <h1>{{thisplaylist.user_p.username|title}}'s Playlists</h1>
+    <p>{{thisplaylist.description}}</p>
+    {%if songs%}
+    <table class="table">
+        <tr>
+            <th scope="col">Song Name</th>
+            <th class='paddingleft' scope="col">Song</th>
+            <th scope="col">Add</th>
+        </tr>
+
+
+
+        {%for song in songs%}
+        <tr>
+            <td>
+                <i class="fas fa-music"></i>
+                <li> {{song.name}}</li>
+            </td>
+
+            <td class='paddingleft'>
+                <audio controls="controls" id="audio_player">
+                    <source src="{{song.document}}" type="audio/ogg" />
+                    Your browser does not support the audio element.
+                </audio>
+            </td>
+            <td>
+                <form action="/addsongtomyplaylist/{{song.id}}" method="POST">
+                    {% csrf_token %}
+                    <select name="drop">
+                        {%for playlist in userplaylists%}
+                        <option value="{{playlist.id}}">{{playlist.name}}</option>
+                        {%endfor%}
+                    </select>
+                    <input class='btn' type="submit" value="Add to This Playlist">
+                </form>
+            </td>
+
+
+
+
+        </tr>
+        {%endfor%}
+    </table>
+    {%endif%}
+    <div class="comments">
+        <h2>Comments:</h2>
+        {%for comment in comments%}
+        <h4>{{comment.user.username|title}} :</h4>
+        <p>{{comment.content}}</p>
+        {%if comment.user == loggeduser%}
+        <span><i class="fas fa-comment-dots"></i><a href="/deletecomment/{{comment.id}}/{{thisplaylist.id}}"> Delete
+            </a></span>
+        {%endif%}
+        {%endfor%}
+    </div>
+
+    <form action="comment/{{thisplaylist.id}}" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="name">Leave Comment:</label>
+            <input type="textarea" class="form-control" placeholder="What do you think about this playlist"
+                name="comment">
+        </div>
+        <input type="submit" value="Comment" class="btn transparent">
+    </form>
+    {% endblock %}

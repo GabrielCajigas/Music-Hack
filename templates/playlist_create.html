@@ -1,0 +1,46 @@
+{% extends "login.html" %}
+{% load static %}
+{% block extrahead %}
+<title>Playlist Create</title>
+<link rel="stylesheet" href="{% static 'css/playlist_createcss.css' %}">
+{% endblock %}
+</head>
+
+{% block content %}
+
+<body>
+    <div class='container-fluid'>
+        <div class="float-right " style="margin-right:1%;"><a href="/home">Home</a> | <a href="/logoff">Bye</a>
+        </div>
+
+        <div class="jumbotron jumbotron-fluid text-center backgroundcolor">
+            <div class="container">
+                <h1 class="display-2 ">Add A Playlist</h1>
+            </div>
+        </div>
+        {% if messages %}
+
+        <ul>
+            {% for message in messages %}
+            <li>{{message}}</li>
+
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <form action="playlist_create" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" placeholder="Example: Relax" name="name">
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" rows="3" placeholder="Give your playlist a Description!"
+                    name="description"></textarea>
+            </div>
+            <input type="submit" value="Create" class="btn transparent">
+        </form>
+    </div>
+
+
+    {% endblock %}

@@ -1,0 +1,88 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+
+body {
+    padding: 2%;
+    margin: 0;
+    width: 100%;
+    font-family: "Exo", sans-serif;
+    color: #fff;
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.backgroundcolor {
+    background: linear-gradient(to right, rgb(43, 255, 227), rgb(65, 195, 255));
+    border-radius: 0% 0% 73% 73%;
+
+}
+
+.color {
+
+    background: linear-gradient(to right, rgb(43, 255, 227), rgb(65, 195, 255));
+}
+
+a {
+    color: white;
+    text-decoration: none;
+
+}
+
+a:hover {
+    text-decoration: underline;
+    color: white;
+}
+
+a:active {
+    color: black;
+}
+
+a:visited {
+    color: white;
+}
+
+li {
+    list-style-type: none;
+    display: inline-block;
+}
+
+i {
+    margin-right: .5%;
+}
+
+p {
+    padding-left: 2%;
+
+}
+
+.comments p {
+    color: black;
+    padding-bottom: 0;
+}
+
+.paddingleft {
+    padding-left: 17% !important;
+}
+
+span {
+    margin-bottom: 1%;
+}

@@ -1,0 +1,98 @@
+{% extends "login.html" %}
+{% load static %}
+{% block extrahead %}
+<title>Playlist</title>
+<link rel="stylesheet" href="{% static 'css/theplaylistcss.css' %}">
+{% endblock %}
+</head>
+{% block content %}
+
+<body>
+    <div class="float-right " style="margin-right:1%;"><a href="/home">Home</a> | <a href="/logoff">Bye</a>
+    </div>
+    <div class="jumbotron  backgroundcolor">
+        <div class="container text-center">
+            <h1 class="display-1">{{thisplaylist.name|title}}</h1>
+        </div>
+    </div>
+    {%if songs%}
+    <table class="table">
+        <tr>
+            <th scope="col">Song Name</th>
+            <th class='paddingleft' scope="col">Song</th>
+            <th scope="col">This song sucks</th>
+        </tr>
+
+
+
+        {%for x in songs%}
+        <tr>
+            <td>
+                <i class="fas fa-music"></i>
+                <li> {{x.name}}</li>
+            </td>
+
+            <td class='paddingleft'>
+                <audio controls="controls" id="audio_player">
+                    <source src="{{x.document}}" type="audio/ogg" />
+                    Your browser does not support the audio element.
+                </audio>
+            </td>
+
+            <td>
+                <i class="fas fa-poo"></i>
+                <li> <a href="delete/{{x.id}}/{{thisplaylist.id}}">Delete</a></li>
+            </td>
+
+
+        </tr>
+        {%endfor%}
+    </table>
+    {%endif%}
+
+    <div class="comments">
+        <h1>Comments:</h1>
+        {%for comment in comments%}
+        <h3>{{comment.user.username|title}} :</h3>
+        <p>{{comment.content}}</p>
+        <span><i class="fas fa-comment-dots"></i><a href="/deletecomment/{{comment.id}}/{{thisplaylist.id}}"> Delete
+            </a></span>
+        {%endfor%}
+    </div>
+
+
+    <h1 class="display-6">Add a Song</h1>
+    {% if messages %}
+    {% for message in messages %}
+    <ul>
+
+        <li>{{ message }}</li>
+
+    </ul>
+
+    {% endfor %}
+    {% endif %}
+    <form action="{%url 'playlist' thisplaylist.id %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type='text' name="name" class="btn color" placeholder='Name'>
+        <input type="file" name="myfile" class="btn color">
+        <button type="submit" class="btn color">Upload</button>
+    </form>
+    {% endblock %}
+    <!-- <script>
+        $('form').submit(function (e) {
+            e.preventDefault()
+            $.ajax({
+                url: '/theplaylist/{{thisplaylist.id}}',
+                method: 'post',
+                data: $(this).serialize(),
+                success: function (serverResponse) {
+                    // Replace the html inside a div with the class "posts" with the server response
+                    $('.table').html(serverResponse)
+
+                }
+
+            })
+            $(this).trigger('reset')
+        })
+    </script> -->
